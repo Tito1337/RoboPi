@@ -60,7 +60,7 @@ def forwardUntilObstacle():
         if not GPIO.input(Sensor1):
             obstacle = True
         if not GPIO.input(Sensor2):
-            obstacle = False
+            obstacle = True
 
     M1stop()
     M2stop()
@@ -69,7 +69,7 @@ if __name__ == '__main__':
     setup()
 
     try:
-        while True
+        while True:
             forwardUntilObstacle()
             M1backwards()
             M2backwards()
