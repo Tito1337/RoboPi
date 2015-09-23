@@ -57,12 +57,12 @@ if __name__ == '__main__':
     try:
         M1forward()
         M2forward()
-        continue = True
-        while continue:
+        forward = True
+        while forward:
             if not GPIO.input(Sensor1):
-                stop = False
+                forward = False
             if not GPIO.input(Sensor2):
-                stop = False
+                forward = False
         M1stop()
         M2stop()
 
