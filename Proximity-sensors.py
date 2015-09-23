@@ -7,11 +7,11 @@ from time import sleep
 # Configuration
 Motor1A = 23
 Motor1B = 21
-Sensor1 = 25
+Sensor1 = 15
  
 Motor2A = 16
 Motor2B = 18
-Sensor2 = 20
+Sensor2 = 22
  
 def setup():
     GPIO.setmode(GPIO.BOARD)
@@ -56,7 +56,11 @@ if __name__ == '__main__':
 
     try:
         while True:
-            time.sleep(10)
+            if GPIO.input(Sensor1):
+                print("Sensor1 triggered")
+            if GPIO.input(Sensor2)
+                print("Sensor2 triggered")
+            
     except KeyboardInterrupt:
         print 'Exiting...'
 
