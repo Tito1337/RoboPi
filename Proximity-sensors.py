@@ -55,12 +55,17 @@ if __name__ == '__main__':
     setup()
 
     try:
-        while True:
-            if GPIO.input(Sensor1):
-                print("Sensor1 triggered")
-            if GPIO.input(Sensor2)
-                print("Sensor2 triggered")
-            
+        M1forward()
+        M2forward()
+        continue = True
+        while continue:
+            if not GPIO.input(Sensor1):
+                stop = False
+            if not GPIO.input(Sensor2):
+                stop = False
+        M1stop()
+        M2stop()
+
     except KeyboardInterrupt:
         print 'Exiting...'
 
