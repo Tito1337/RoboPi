@@ -56,17 +56,31 @@ def getKey():
 	    event = screen.getch()
 	finally:
 	    curses.endwin()
-    return event
+	return event
 
 if __name__ == '__main__':
 	setup()
 
 	while True:
-	if event == curses.KEY_LEFT:
-    	print("Left Arrow Key pressed")
-	elif event == curses.KEY_RIGHT:
-    	print("Right Arrow Key pressed")
-	else:
-    	print(event)
+		M1stop()
+		M2stop()
+		event = getKey()
+		if event == curses.KEY_LEFT:
+			print("Left Arrow Key pressed")
+			M1backwards()
+			M2forward()
+		elif event == curses.KEY_RIGHT:
+			print("Right Arrow Key pressed")
+			M1forward()
+			M2backwards()
+		elif event == curses.KEY_UP:
+			M1forward()
+			M2forward()
+		elif event == curses.KEY_DOWN:
+			M1backwards()
+			M2backwards()
+		else:
+			print(event)
+		sleep(0.5)
 
 	cleanup()
