@@ -51,20 +51,32 @@ def M2stop():
     GPIO.output(Motor2A,GPIO.LOW)
     GPIO.output(Motor2B,GPIO.LOW)
 
+def forwardUntilObstacle():
+    M1forward()
+    M2forward()
+
+    obstacle = False
+    while not obstacle:
+        if not GPIO.input(Sensor1):
+            obstacle = True
+        if not GPIO.input(Sensor2):
+            obstacle = False
+
+    M1stop()
+    M2stop()
+
 if __name__ == '__main__':
     setup()
 
     try:
-        M1forward()
-        M2forward()
-        forward = True
-        while forward:
-            if not GPIO.input(Sensor1):
-                forward = False
-            if not GPIO.input(Sensor2):
-                forward = False
-        M1stop()
-        M2stop()
+        while True
+            forwardUntilObstacle()
+            M1backwards()
+            M2backwards()
+            sleep(0.2)
+            M1forward()
+            sleep(0.2)
+            M2forward()
 
     except KeyboardInterrupt:
         print 'Exiting...'
