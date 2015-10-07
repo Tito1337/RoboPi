@@ -84,6 +84,20 @@ def forwardUntilObstacle():
     M1stop()
     M2stop()
 
+def forwardUntilCount(count1, count2):
+	global RotaryCount1, RotaryCount2
+	M1forward()
+	M2forward()
+	done1 = false
+	while not (done1 and done2):
+		if(RotaryCount1 > count1):
+			M1stop()
+			done1
+		if(RotaryCount2 > count2):
+			M2stop()
+			done2
+
+
 def updateEncoders():
     global RotaryLastState1, RotaryLastState2, RotaryCount1, RotaryCount2
     RotaryNewState1 = GPIO.input(RotarySensor1)
@@ -101,10 +115,7 @@ if __name__ == '__main__':
     setup()
 
     try:
-    	M1stop()
-        M2stop()
-    	myThread = EncodersThread()
-    	myThread.start()
+    	forwardUntilCount(100, 100)
         while True:
             print("Encoder 1 : " + str(RotaryCount1) + "     Encoder 2 : " + str(RotaryCount2))
             sleep(0.5)
