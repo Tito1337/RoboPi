@@ -86,6 +86,8 @@ def forwardUntilObstacle():
 
 def moveUntilCount(dir,count1, count2):
     global RotaryCount1, RotaryCount2
+    BeforeCount1 = RotaryCount1
+    BeforeCount2 = RotaryCount2
     if(dir=='forward'):
         M1forward()
         M2forward()
@@ -101,14 +103,12 @@ def moveUntilCount(dir,count1, count2):
     done1 = False
     done2 = False
     while not (done1 and done2):
-      if(RotaryCount1 > count1):
+      if(RotaryCount1 > BeforeCount1+count1):
         M1stop()
         done1 = True
-      if(RotaryCount2 > count2):
+      if(RotaryCount2 > BeforeCount2+count2):
         M2stop()
         done2 = True
-    RotaryCount1=0
-    RotaryCount2=0
 
 
 def updateEncoders():
@@ -131,11 +131,37 @@ if __name__ == '__main__':
         myThread = EncodersThread()
         myThread.start()
         
-        moveUntilCount('forward', 100, 100)
-        moveUntilCount('forward', 100, 100)
-        moveUntilCount('left', 40, 40)
+        #Avance 1m
+        for x in range(1, 18):
+           moveUntilCount('forward', 10, 10)
 
-        
+        #Contourne par la gauche
+        sleep(1)
+        moveUntilCount('left', 14, 15)
+        sleep(1)
+        for x in range(1, 10):
+           moveUntilCount('forward', 10, 10)
+        sleep(1)
+        moveUntilCount('right',15,14)
+        sleep(1)
+
+        #Avance jusqu'à obstacle
+        forwardUntilObstacle()
+
+        #Contourne par la droite
+        sleep(1)
+        moveUntilCount('right',15,14)
+        sleep(1)
+        for x in range(1, 10):
+           moveUntilCount('forward', 10, 10)
+        sleep(1)
+        moveUntilCount('left', 14, 15)
+        sleep(1)
+
+        #Avance 1m
+        for x in range(1, 18):
+           moveUntilCount('forward', 10, 10)
+
 
     except KeyboardInterrupt:
         print 'Exiting...'
