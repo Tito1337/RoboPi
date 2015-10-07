@@ -27,10 +27,12 @@ def setup():
     GPIO.setup(Motor1A,GPIO.OUT)
     GPIO.setup(Motor1B,GPIO.OUT)
     GPIO.setup(ProximitySensor1,GPIO.IN)
+    GPIO.setup(RotarySensor1,GPIO.IN)
  
     GPIO.setup(Motor2A,GPIO.OUT)
     GPIO.setup(Motor2B,GPIO.OUT)
     GPIO.setup(ProximitySensor2,GPIO.IN)
+    GPIO.setup(RotarySensor2,GPIO.IN)
 
 def cleanup():
     GPIO.cleanup()
