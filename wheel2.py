@@ -18,10 +18,12 @@ RotarySensor2 = 26
 class EncodersThread(Thread):
     def __init__(self):
         Thread.__init__(self)
+        setup()
 
     def run(self):
         while True:
-        	updateEncoders()
+            updateEncoders()
+                sleep(0.001)
  
 def setup():
     global RotaryLastState1, RotaryLastState2, RotaryCount1, RotaryCount2
@@ -85,19 +87,19 @@ def forwardUntilObstacle():
     M2stop()
 
 def forwardUntilCount(count1, count2):
-	global RotaryCount1, RotaryCount2
-	M1forward()
-	M2forward()
-	done1 = False
-	done2 = False
-	while not (done1 and done2):
-		print("Encoder 1 : " + str(RotaryCount1) + "     Encoder 2 : " + str(RotaryCount2))
-		if(RotaryCount1 > count1):
-			M1stop()
-			done1 = True
-		if(RotaryCount2 > count2):
-			M2stop()
-			done2 = True
+    global RotaryCount1, RotaryCount2
+    M1forward()
+    M2forward()
+    done1 = False
+    done2 = False
+    while not (done1 and done2):
+        print("Encoder 1 : " + str(RotaryCount1) + "     Encoder 2 : " + str(RotaryCount2))
+        if(RotaryCount1 > count1):
+            M1stop()
+            done1 = True
+        if(RotaryCount2 > count2):
+            M2stop()
+            done2 = True
 
 
 def updateEncoders():
@@ -117,12 +119,10 @@ if __name__ == '__main__':
     setup()
 
     try:
-    	myThread = EncodersThread()
-    	myThread.start()
-    	forwardUntilCount(200, 200)
-        while True:
-            print("Encoder 1 : " + str(RotaryCount1) + "     Encoder 2 : " + str(RotaryCount2))
-            sleep(0.5)
+        myThread = EncodersThread()
+        myThread.start()
+        for x in range(1, 10):
+            forwardUntilCount(x*50, x*50)
 
     except KeyboardInterrupt:
         print 'Exiting...'
