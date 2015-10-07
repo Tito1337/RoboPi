@@ -16,12 +16,9 @@ ProximitySensor2 = 22
 RotarySensor2 = 26
 
 # Globals
-RotaryCount1 = 0
-RotaryCount2 = 0
-RotaryLastState1 = False
-RotaryLastState2 = False
  
 def setup():
+    global RotaryLastState1, RotaryLastState2, RotaryCount1, RotaryCount2
     GPIO.setmode(GPIO.BOARD)
 
     GPIO.setup(Motor1A,GPIO.OUT)
@@ -33,7 +30,13 @@ def setup():
     GPIO.setup(Motor2B,GPIO.OUT)
     GPIO.setup(ProximitySensor2,GPIO.IN)
     GPIO.setup(RotarySensor2,GPIO.IN)
+    
+    RotaryCount1 = 0
+    RotaryCount2 = 0
+    RotaryLastState1 = False
+    RotaryLastState2 = False
 
+    
 def cleanup():
     GPIO.cleanup()
  
@@ -76,6 +79,7 @@ def forwardUntilObstacle():
     M2stop()
 
 def updateEncoders():
+    global RotaryLastState1, RotaryLastState2, RotaryCount1, RotaryCount2
     RotaryNewState1 = GPIO.input(RotarySensor1)
     RotaryNewState2 = GPIO.input(RotarySensor2)
     if(RotaryNewState1 != RotaryLastState1):
@@ -87,15 +91,16 @@ def updateEncoders():
 
 
 if __name__ == '__main__':
+    global RotaryLastState1, RotaryLastState2, RotaryCount1, RotaryCount2
     setup()
 
     try:
         while True:
-            M1forward()
-            M2forward()
+            M1stop()
+            M2stop()
             updateEncoders()
-            print("Encoder 1 : " + RotaryCount1)
-            print("Encoder 2 : " + RotaryCount2)
+            print("Encoder 1 : " + str(RotaryCount1))
+            print("Encoder 2 : " + str(RotaryCount2))
 
     except KeyboardInterrupt:
         print 'Exiting...'
