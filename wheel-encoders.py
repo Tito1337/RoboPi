@@ -2,7 +2,7 @@
 import curses
 import RPi.GPIO as GPIO
 from time import sleep
-
+from threading import Thread
 
 # Configuration
 Motor1A = 23
@@ -15,7 +15,13 @@ Motor2B = 18
 ProximitySensor2 = 22
 RotarySensor2 = 26
 
-# Globals
+class EncodersThread(Thread):
+    def __init__(self):
+        Thread.__init__(self)
+
+    def run(self):
+        while True:
+        	updateEncoders()
  
 def setup():
     global RotaryLastState1, RotaryLastState2, RotaryCount1, RotaryCount2
@@ -95,14 +101,16 @@ if __name__ == '__main__':
     setup()
 
     try:
+    	M1stop()
+        M2stop()
+    	myThread = EncodersThread()
+    	myThread.start()
         while True:
-            M1stop()
-            M2stop()
-            updateEncoders()
-            print("Encoder 1 : " + str(RotaryCount1))
-            print("Encoder 2 : " + str(RotaryCount2))
+            print("Encoder 1 : " + str(RotaryCount1) + "     Encoder 2 : " + str(RotaryCount2))
+            sleep(0.5)
 
     except KeyboardInterrupt:
         print 'Exiting...'
 
     cleanup()
+    myThread.stop()
