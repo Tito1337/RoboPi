@@ -145,23 +145,17 @@ if __name__ == '__main__':
         moveUntilCount('right',15,14)
         sleep(1)
 
-        #Avance jusqu'à obstacle
-        forwardUntilObstacle()
-
-        #Contourne par la droite
-        sleep(1)
-        moveUntilCount('right',15,14)
-        sleep(1)
-        for x in range(1, 10):
-           moveUntilCount('forward', 10, 10)
-        sleep(1)
-        moveUntilCount('left', 14, 15)
-        sleep(1)
-
-        #Avance 1m
-        for x in range(1, 18):
-           moveUntilCount('forward', 10, 10)
-
+        while True:
+            forwardUntilObstacle()
+            #Contourne par la droite
+            sleep(1)
+            moveUntilCount('right',15,14)
+            sleep(1)
+            for x in range(1, 10):
+                moveUntilCount('forward', 10, 10)
+            sleep(1)
+            moveUntilCount('left', 14, 15)
+            sleep(1)
 
     except KeyboardInterrupt:
         print 'Exiting...'
